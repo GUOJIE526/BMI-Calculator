@@ -8,8 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArD3jbxH-ch0-WVvlaX3HuUPa-Vv4bgog&libraries=places"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="style.css" />
@@ -18,15 +23,15 @@
 
   <body>
     <header class="header">
-      <a href="#home" class="logo">BMI Calculator</a>
+      <a href="#home" class="logo">BMI Calculator<br>BMI計算器</a>
 
       <i class='bx bx-menu' id="menu-icon"></i>
 
       <nav class="navbar">
         <a href="#home" class="active">首頁</a>
         <a href="#record">紀錄表</a>
-        <a href="#healthfood">健康餐推薦</a>
         <a href="#workout">健身達人</a>
+        <a href="#healthyfood">健康餐推薦</a>
       </nav>
     </header>
     <section class="home" id="home">
@@ -39,82 +44,33 @@
           <button type="button" id="btn">看清事實</button>
       </form>
       </div>
-      <div class="checkbtn">
-
-      </div>
     </section>
-    <!-- <main>
-      <br />
-      <div class="container">
-        <div class="row justify-content-md-center">
-          <div class="col-md-12">
-            <h1 class="text-center">BMI 計算器</h1>
-          </div>
-        </div>
 
-        <br />
+    <section class="record" id="record">
+      <h1>BMI 紀錄表</h1>
+      <table id="recordTable">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>身高 (cm)</th>
+            <th>體重 (kg)</th>
+            <th>BMI</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
-        <div class="row justify-content-md-center">
-          <div class="col-md-6">
-            <form class="row g-3" id="addRecordForm">
-              <div class="col-md-6">
-                <label for="height" class="form-label">身高 (cm)</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="height"
-                  min="1"
-                  placeholder="請輸入您的身高"
-                />
-              </div>
-              <div class="col-md-6">
-                <label for="weight" class="form-label">體重 (kg)</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="weight"
-                  min="1"
-                  placeholder="請輸入您的體重"
-                />
-              </div>
-              <div class="col-md-12">
-                <button type="submit" class="btn btn-success">STAR</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <br />
-
-        <div class="row justify-content-md-center">
-          <div class="col-md-8">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">身高 (cm)</th>
-                  <th scope="col">體重 (kg)</th>
-                  <th scope="col">BMI</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody id="recordTable">
-                 紀錄會以 JavaScript 動態新增至這裡
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <br />
-
-        <div class="row justify-content-md-center">
-          <div class="col-md-10">
-            <div id="chartContainer">
-              <canvas id="bmiChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main> --> 
+    <section class="workout" id="workout">
+      <h1>推薦的健身房</h1>
+      <div id="map" style="height: 500px;"></div>
+      <div id="workout-list"></div>
+    </section>
+    <section class="healthyfood" id="healthyfood">
+      <h1>健康餐推薦</h1>
+      <div id="healthy-food-map" style="height: 500px;"></div>
+      <div id="healthy-food-list"></div>
+    </section>
     <script src="script.js"></script>
   </body>
 </html>
