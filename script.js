@@ -1,111 +1,67 @@
-var userData = [];
+document.addEventListener("DOMContentLoaded", function () {
+  const bmiForm = document.getElementById("bmi-form");
+  const heightInput = document.getElementById("inputHeight");
+  const weightInput = document.getElementById("inputWeight");
+  const btn = document.getElementById("btn");
+  const recordTableBody = document.querySelector("#recordTable tbody");
 
-function saveUserData() {
-  localStorage.setItem("userData", JSON.stringify(userData));
-}
+  btn.addEventListener("click", function () {
+    const height = parseFloat(heightInput.value);
+    const weight = parseFloat(weightInput.value);
 
-function loadUserData() {
-  var data = localStorage.getItem("userData");
-  if (data !== null) {
-    userData = JSON.parse(data);
-  }
-}
+    if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+      alert("請輸入有效升高和體重");
+      return;
+    }
 
-function updateTable() {
-  $("#recordTable").empty();
+    const bmi = weight / (height / 100) ** 2;
+    alert(`你的 BMI 是 ${bmi.toFixed(2)}`);
 
-  for (var i = 0; i < userData.length; i++) {
-    var record = userData[i];
-    var tableRow =
-      "<tr>" +
-      "<td>" +
-      record.height +
-      "</td>" +
-      "<td>" +
-      record.weight +
-      "</td>" +
-      "<td>" +
-      record.bmi +
-      "</td>" +
-      "<td><button class='btn btn-sm btn-danger deleteButton' data-index='" +
-      i +
-      "'>刪除</button></td>" +
-      "</tr>";
+    const date = new Date().toLocaleDateString();
+    addRecord(date, height, weight, bmi.toFixed(2));
 
-    $("#recordTable").append(tableRow);
-  }
-
-  $(".deleteButton").click(function () {
-    var index = $(this).data("index");
-    userData.splice(index, 1);
-    saveUserData();
-    updateTable();
-    updateChart();
+    if (bmi > 28.5) {
+      alert("你的 BMI 超過 30，我們會為您搜索附近的健身房，請趕快去健身。");
+      searchNearbyGym();
+    }
   });
-}
 
-function updateChart() {
-  var labels = [];
-  var data = [];
-
-  for (var i = 0; i < userData.length; i++) {
-    labels.push(i + 1);
-    data.push(userData[i].bmi);
+  function addRecord(date, height, weight, bmi) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${date}</td>
+      <td>${height}</td>
+      <td>${weight}</td>
+      <td>${bmi}</td>`;
+    recordTableBody.appendChild(row);
   }
-  if (chart !== undefined) chart.destroy();
-  var ctx = document.getElementById("bmiChart").getContext("2d");
 
-  chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "BMI",
-          data: data,
-          backgroundColor: "#007bff",
-          borderColor: "#007bff",
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 40,
-        },
-      },
-    },
-  });
-}
+  function searchNearbyGym() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-var chart;
-$(document).ready(function () {
-  loadUserData();
-  updateTable();
-  updateChart();
+        const map = L.map("map").setView([latitude, longitude], 13);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
 
-  $("#addRecordForm").submit(function (event) {
-    event.preventDefault();
+        const markers = L.markerClusterGroup();
 
-    var height = $("#height").val();
-    var weight = $("#weight").val();
-
-    var bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
-
-    var record = {
-      height: height,
-      weight: weight,
-      bmi: bmi,
-    };
-
-    userData.push(record);
-    saveUserData();
-    updateTable();
-    updateChart();
-
-    $("#height").val("");
-    $("#weight").val("");
-  });
+        const service = new google.maps.places.PlacesService(
+          document.createElement("div")
+        );
+        const request = {
+          location: new google.maps.LatLng(latitude, longitude),
+          radius: "5000",
+          type: ["gym"],
+          keyword: "gym",
+          minPriceLevel: 0,
+          maxPriceLevel: 4,
+        };
+      });
+    }
+  }
 });
