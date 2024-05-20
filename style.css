@@ -13,7 +13,7 @@ body{
 
 section{
   min-height: 100vh;
-  padding: 10rem 11% 10rem;
+  padding: 8rem 10% 8rem;
 }
 
 .header{
@@ -28,7 +28,14 @@ section{
   align-items: center;
   background-color: #343a40;
 }
-
+.home{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 50px 50px;
+}
 .navbar{
   text-align: right;
   margin-right: 20px;
@@ -47,7 +54,13 @@ section{
   color: antiquewhite;
 }
 .input-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  width: 200px;
+  margin: 50px 50px;
+  padding: 20px 20px;
 }
 .input-container p{
   margin: 10px 0;
@@ -70,6 +83,9 @@ section{
 }
 .input-container button:hover{
   background-color: #0056b3;
+}
+.record{
+  width: 70%;
 }
 .healthyfood,
 .workout{
