@@ -14,9 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXX&libraries=places"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="assets/logo.jpg"> 
   </head>
@@ -28,13 +25,12 @@
       <i class='bx bx-menu' id="menu-icon"></i>
 
       <nav class="navbar">
-        <a href="#home" class="active">首頁</a>
-        <a href="#record">紀錄表</a>
-        <a href="#workout">健身達人</a>
+        <a href="BMI.html" class="active">首頁</a>
+        <a href="work.html">健身達人</a>
         <a href="#healthyfood">健康餐推薦</a>
       </nav>
     </header>
-    <section class="home" id="home">
+    <div class="home" id="home">
       <div class="input-container">
         <form id="bmi-form">
           <p>身高 cm</p>
@@ -42,24 +38,26 @@
           <p>體重 kg</p>
           <input id="inputWeight" type="text" placeholder="請輸入您的體重">
           <button type="button" id="btn">看清事實</button>
-      </form>
+        </form>
       </div>
-    </section>
 
-    <section class="record" id="record">
-      <h1>BMI 紀錄表</h1>
-      <table id="recordTable">
-        <thead>
-          <tr>
-            <th>日期</th>
-            <th>身高 (cm)</th>
-            <th>體重 (kg)</th>
-            <th>BMI</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
+      <div class="record" id="record">
+        <h1>BMI 紀錄表</h1>
+        <table id="recordTable">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>身高 (cm)</th>
+              <th>體重 (kg)</th>
+              <th>BMI</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    
 
     <section class="workout" id="workout">
       <h1>推薦的健身房</h1>
