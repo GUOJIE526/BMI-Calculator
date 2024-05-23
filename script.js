@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const btn = document.getElementById("btn");
   const recordTableBody = document.querySelector("#recordTable tbody");
 
+  // 加載紀錄
+  loadRecords();
+
   btn.addEventListener("click", function () {
     const height = parseFloat(heightInput.value);
     const weight = parseFloat(weightInput.value);
@@ -21,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
     addRecord(date, height, weight, bmi.toFixed(2));
 
     if (bmi > 28.5) {
-      alert("你的 BMI 超過 30，我們會為您搜索附近的健身房，請趕快去健身。");
-      searchNearbyGym();
+      alert("你的 BMI 超過 30，我們會為您提出緊實改善計畫。");
+      window.location.href = "todo-list.html";
     }
   });
 
@@ -34,34 +37,5 @@ document.addEventListener("DOMContentLoaded", function () {
       <td>${weight}</td>
       <td>${bmi}</td>`;
     recordTableBody.appendChild(row);
-  }
-
-  function searchNearbyGym() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        const map = L.map("map").setView([latitude, longitude], 13);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map);
-
-        const markers = L.markerClusterGroup();
-
-        const service = new google.maps.places.PlacesService(
-          document.createElement("div")
-        );
-        const request = {
-          location: new google.maps.LatLng(latitude, longitude),
-          radius: "5000",
-          type: ["gym"],
-          keyword: "gym",
-          minPriceLevel: 0,
-          maxPriceLevel: 4,
-        };
-      });
-    }
   }
 });
