@@ -1,4 +1,4 @@
-import { addRecord, loadRecords, saveRecord } from "./dom.js";
+import { addRecord, loadRecords, saveRecord, deleteRecord } from "./dom.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const heightInput = document.getElementById("inputHeight");
@@ -33,8 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const date = new Date().toLocaleDateString();
-    const record = { date, height, weight, bmi: bmi.toFixed(2) };
-    addRecord(record);
-    saveRecord(record);
+    addRecord(date, height, weight, bmi.toFixed(2));
+    saveRecord(date, height, weight, bmi.toFixed(2));
   });
 });
