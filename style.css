@@ -116,7 +116,3 @@ th{
   width: 20px;
   height: 20px;
 }
-.delete-btn:hover{
-  background-color: #585656;
-  cursor: pointer;
-}
