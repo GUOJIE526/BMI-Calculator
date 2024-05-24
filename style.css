@@ -106,3 +106,17 @@ th, td{
 th{
   background-color: #f2f2f2;
 }
+.delete-btn{
+  background-image: url("assets/x-circle.svg");
+  border-radius: 25px;
+  padding: 5px;
+  background-position: center;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+}
+.delete-btn:hover{
+  background-color: #585656;
+  cursor: pointer;
+}

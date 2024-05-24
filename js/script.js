@@ -1,9 +1,11 @@
-import { addRecord } from "./dom.js";
+import { addRecord, loadRecords, saveRecord, deleteRecord } from "./dom.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const heightInput = document.getElementById("inputHeight");
   const weightInput = document.getElementById("inputWeight");
   const btn = document.getElementById("btn");
+
+  loadRecords();
 
   btn.addEventListener("click", function () {
     const height = parseFloat(heightInput.value);
@@ -32,5 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const date = new Date().toLocaleDateString();
     addRecord(date, height, weight, bmi.toFixed(2));
+    saveRecord(date, height, weight, bmi.toFixed(2));
   });
 });
