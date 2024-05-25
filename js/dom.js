@@ -42,8 +42,10 @@ function addRecord(date, height, weight, bmi) {
   row.appendChild(deleteBtn);
 }
 
-export function deleteBMI() {
-  console.log("delete");
+function deleteBMI() {
+  const list = this.parentNode;
+  const parent = list.parentNode;
+  parent.removeChild(list);
 }
 
 //   //add deletebtn
