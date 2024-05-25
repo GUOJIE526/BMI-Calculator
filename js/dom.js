@@ -16,7 +16,7 @@ function saveRecord(record) {
   localStorage.setItem(STATE_KEY, JSON.stringify(record));
 }
 
-//更新紀錄(頁面)
+//刷新紀錄(頁面)
 function initrecords() {
   recordsList = loadRecord();
   const tr = document.createElement("tr");
