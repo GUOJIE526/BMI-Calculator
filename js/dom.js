@@ -3,7 +3,7 @@ let recordsList = [];
 const STATE_KEY = "bmirecods";
 
 //讀取localStorage
-export function loadRecord() {
+function loadRecord() {
   const recordsList = localStorage.getItem(STATE_KEY);
   if (recordsList !== null) {
     return JSON.parse(recordsList);
@@ -16,21 +16,20 @@ function saveRecord(record) {
   localStorage.setItem(STATE_KEY, JSON.stringify(record));
 }
 
-//刷新紀錄(頁面)
+//刷新紀錄(頁面);
 function initrecords() {
   recordsList = loadRecord();
-  const tr = document.createElement("tr");
-  let records = [];
-  const td = document.createElement("td");
-  for (let i = 0; i < recordsList.length; i++) {
-    records += i;
-  }
-  td.appendChild(records);
+  const tr = document.getElementById("tbody");
+  for (const record of recordsList) {
+    const td = document.createElement("td");
+    td.innerHTML = JSON.stringify(record);
+    const deleteButton = document.createElement("td");
+    deleteButton.classList.add("delete-btn");
+    deleteButton.onclick = deleteBMI;
 
-  const deleteButton = document.createElement("td");
-  deleteButton.classList.add("delete-btn");
-  deleteButton.onclick = deleteBMI;
-  td.appendChild(deleteButton);
+    td.appendChild(deleteButton);
+  }
+
   tr.appendChild(td);
 }
 
