@@ -1,3 +1,19 @@
+let recordsList = [];
+
+const STATE_KEY = "bmirecods";
+
+function loadRecord(){
+  const recordsList = JSON.parse(localStorage.getItem("STATE_KEY")) || [];
+}
+
+function saveRecord(records){
+  localStorage.setItem(STATE_KEY, JSON.stringify(records));
+}
+
+function initRecord(){
+  recordsList = loadRecord();
+}
+
 export function BMI() {
   const heightInput = document.getElementById("inputHeight");
   const weightInput = document.getElementById("inputWeight");
@@ -47,14 +63,6 @@ function deleteBMI() {
   const parent = list.parentNode;
   parent.removeChild(list);
 }
-
-//   //add deletebtn
-//   const deleteBtn = document.querySelector(".delete-btn");
-//   deleteBtn.addEventListener("click", () => {
-//     deleteRecord(date, height, weight, bmi);
-//     row.remove();
-//   });
-// }
 
 // export function saveRecord(date, height, weight, bmi) {
 //   const records = JSON.parse(localStorage.getItem("bmirecords")) || [];
