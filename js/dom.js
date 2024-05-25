@@ -2,23 +2,50 @@ let recordsList = [];
 
 const STATE_KEY = "bmirecods";
 
-function loadRecord(){
-  const recordsList = JSON.parse(localStorage.getItem("STATE_KEY")) || [];
+//讀取localStorage
+function loadRecord() {
+  const recordsList = localStorage.getItem(STATE_KEY);
+  if (recordsList !== null) {
+    return JSON.parse(recordsList);
+  }
+  return [];
 }
 
-function saveRecord(records){
-  localStorage.setItem(STATE_KEY, JSON.stringify(records));
+//儲存localStorage
+function saveRecord(record) {
+  localStorage.setItem(STATE_KEY, JSON.stringify(record));
 }
 
-function initRecord(){
+//更新紀錄(頁面)
+function initRecord() {
+  //load records
   recordsList = loadRecord();
+  //render records
+  const tbody = document.getElementById("tbody");
+  recordsList.forEach((rowdata) => {
+    const row = document.createElement("tr");
+    Object.values(rowdata).forEach((celldata) => {
+      const cell = document.createElement("td");
+      cell.textContent = celldata;
+
+      const deleteButton = document.createElement("td");
+      deleteButton.classList.add("delete-btn");
+      deleteButton.onclick = deleteBMI;
+      cell.appendChild(deleteButton);
+
+      row.appendChild(cell);
+      tbody.appendChild(row);
+    });
+  });
 }
 
+//計算BMI
 export function BMI() {
   const heightInput = document.getElementById("inputHeight");
   const weightInput = document.getElementById("inputWeight");
   const height = parseFloat(heightInput.value);
   const weight = parseFloat(weightInput.value);
+  const date = new Date().toLocaleDateString();
 
   if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
     Swal.fire("請輸入有效身高體重！");
@@ -39,10 +66,12 @@ export function BMI() {
   } else {
     Swal.fire(`您的 BMI 是  ${bmi.toFixed(2)} `);
   }
-  const date = new Date().toLocaleDateString();
   addRecord(date, height, weight, bmi.toFixed(2));
+  recordsList.push(date, height, weight, bmi.toFixed(2));
+  saveRecord(recordsList);
 }
 
+//新增紀錄表
 function addRecord(date, height, weight, bmi) {
   const row = document.createElement("tr");
   const recordTableBody = document.querySelector("#recordTable tbody");
@@ -57,13 +86,13 @@ function addRecord(date, height, weight, bmi) {
   deleteBtn.onclick = deleteBMI;
   row.appendChild(deleteBtn);
 }
-
+//記錄條刪除紐
 function deleteBMI() {
   const list = this.parentNode;
   const parent = list.parentNode;
   parent.removeChild(list);
 }
-
+initRecord();
 // export function saveRecord(date, height, weight, bmi) {
 //   const records = JSON.parse(localStorage.getItem("bmirecords")) || [];
 //   records.push({ date, height, weight, bmi });
