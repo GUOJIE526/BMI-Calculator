@@ -3,7 +3,7 @@ let recordsList = [];
 const STATE_KEY = "bmirecods";
 
 //讀取localStorage
-function loadRecord() {
+export function loadRecord() {
   const recordsList = localStorage.getItem(STATE_KEY);
   if (recordsList !== null) {
     return JSON.parse(recordsList);
@@ -17,26 +17,21 @@ function saveRecord(record) {
 }
 
 //更新紀錄(頁面)
-function initRecord() {
-  //load records
+function initrecords() {
   recordsList = loadRecord();
-  //render records
-  const tbody = document.getElementById("tbody");
-  recordsList.forEach((rowdata) => {
-    const row = document.createElement("tr");
-    Object.values(rowdata).forEach((celldata) => {
-      const cell = document.createElement("td");
-      cell.textContent = celldata;
+  const tr = document.createElement("tr");
+  let records = [];
+  const td = document.createElement("td");
+  for (let i = 0; i < recordsList.length; i++) {
+    records += i;
+  }
+  td.appendChild(records);
 
-      const deleteButton = document.createElement("td");
-      deleteButton.classList.add("delete-btn");
-      deleteButton.onclick = deleteBMI;
-      cell.appendChild(deleteButton);
-
-      row.appendChild(cell);
-      tbody.appendChild(row);
-    });
-  });
+  const deleteButton = document.createElement("td");
+  deleteButton.classList.add("delete-btn");
+  deleteButton.onclick = deleteBMI;
+  td.appendChild(deleteButton);
+  tr.appendChild(td);
 }
 
 //計算BMI
@@ -92,7 +87,7 @@ function deleteBMI() {
   const parent = list.parentNode;
   parent.removeChild(list);
 }
-initRecord();
+
 // export function saveRecord(date, height, weight, bmi) {
 //   const records = JSON.parse(localStorage.getItem("bmirecords")) || [];
 //   records.push({ date, height, weight, bmi });

@@ -87,10 +87,6 @@ section{
 .record{
   width: 70%;
 }
-.healthyfood,
-.workout{
-  display: none;
-}
 table{
   width: 100%;
   border-collapse: collapse;
