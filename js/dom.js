@@ -1,24 +1,10 @@
 let recordsList = [];
 
-const STATE_KEY = "bmirecods";
-
-//讀取localStorage
-function loadRecord() {
-  const recordsList = localStorage.getItem(STATE_KEY);
-  if (recordsList !== null) {
-    return JSON.parse(recordsList);
-  }
-  return [];
-}
-
-//儲存localStorage
-function saveRecord(record) {
-  localStorage.setItem(STATE_KEY, JSON.stringify(record));
-}
+const STATE_KEY = "bmirecords";
 
 //刷新紀錄(頁面);
 function initrecords() {
-  recordsList = loadRecord();
+  recordsList = loadRecords();
   const tr = document.getElementById("tbody");
   for (const record of recordsList) {
     const td = document.createElement("td");
@@ -31,6 +17,33 @@ function initrecords() {
   }
 
   tr.appendChild(td);
+}
+
+// //讀取localStorage
+// function loadRecord() {
+//   const recordsList = localStorage.getItem(STATE_KEY);
+//   if (recordsList !== null) {
+//     return JSON.parse(recordsList);
+//   }
+//   return [];
+//   console.log(recordsList);
+//   addRecord(recordsList[0], recordsList[1], recordsList[2], recordsList[3]);
+// }
+
+// //儲存localStorage
+// function saveRecord(record) {
+//   localStorage.setItem(STATE_KEY, JSON.stringify(record));
+// }
+function saveRecord(date, height, weight, bmi) {
+  recordsList.push([date, height, weight, bmi]);
+  localStorage.setItem(STATE_KEY, JSON.stringify(recordsList));
+  console.log(recordsList);
+}
+
+function loadRecords() {
+  const records = JSON.parse(localStorage.getItem(STATE_KEY)) || [];
+  addRecord(records);
+  console.log(records);
 }
 
 //計算BMI
@@ -61,8 +74,7 @@ export function BMI() {
     Swal.fire(`您的 BMI 是  ${bmi.toFixed(2)} `);
   }
   addRecord(date, height, weight, bmi.toFixed(2));
-  recordsList.push(date, height, weight, bmi.toFixed(2));
-  saveRecord(recordsList);
+  saveRecord(date, height, weight, bmi.toFixed(2));
 }
 
 //新增紀錄表
@@ -86,19 +98,6 @@ function deleteBMI() {
   const parent = list.parentNode;
   parent.removeChild(list);
 }
-
-// export function saveRecord(date, height, weight, bmi) {
-//   const records = JSON.parse(localStorage.getItem("bmirecords")) || [];
-//   records.push({ date, height, weight, bmi });
-//   localStorage.setItem("bmirecords", JSON.stringify(records));
-// }
-
-// export function loadRecords() {
-//   const records = JSON.parse(localStorage.getItem("bmirecords")) || [];
-//   records.forEach((record) => {
-//     addRecord(record.date, record.height, record.weight, record.bmi);
-//   });
-// }
 
 // export function deleteRecord(
 //   dateToDelete,
