@@ -3,20 +3,21 @@ let recordsList = [];
 const STATE_KEY = "bmirecords";
 
 //刷新紀錄(頁面);
-function initrecords() {
+export function initrecords() {
   recordsList = loadRecords();
-  const tr = document.getElementById("tbody");
-  for (const record of recordsList) {
-    const td = document.createElement("td");
-    td.innerHTML = JSON.stringify(record);
-    const deleteButton = document.createElement("td");
-    deleteButton.classList.add("delete-btn");
-    deleteButton.onclick = deleteBMI;
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = ""; //先清空
 
-    td.appendChild(deleteButton);
-  }
-
-  tr.appendChild(td);
+  recordsList.forEach((record) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${record.date}</td>
+      <td>${record.height}</td>
+      <td>${record.weight}</td>
+      <td>${record.bmi}</td>
+      <td class="delete-btn" onclick="deleteBMI(${record.id}, this)"></td>`;
+    tbody.appendChild(row);
+  });
 }
 
 // //讀取localStorage
@@ -34,16 +35,20 @@ function initrecords() {
 // function saveRecord(record) {
 //   localStorage.setItem(STATE_KEY, JSON.stringify(record));
 // }
-function saveRecord(date, height, weight, bmi) {
-  recordsList.push([date, height, weight, bmi]);
-  localStorage.setItem(STATE_KEY, JSON.stringify(recordsList));
-  console.log(recordsList);
+function loadRecords() {
+  const recordsList = localStorage.getItem(STATE_KEY);
+  if (recordsList !== null) {
+    return JSON.parse(recordsList);
+  }
+  return [];
 }
 
-function loadRecords() {
-  const records = JSON.parse(localStorage.getItem(STATE_KEY)) || [];
-  addRecord(records);
-  console.log(records);
+function saveRecord(date, height, weight, bmi) {
+  const id = Date.now(); //用時間作為ID
+  const record = { id, date, height, weight, bmi };
+  recordsList.push(record);
+  localStorage.setItem(STATE_KEY, JSON.stringify(recordsList));
+  console.log(recordsList);
 }
 
 //計算BMI
@@ -79,25 +84,37 @@ export function BMI() {
 
 //新增紀錄表
 function addRecord(date, height, weight, bmi) {
+  const id = Date.now(); // 使用時間作為ID
   const row = document.createElement("tr");
   const recordTableBody = document.querySelector("#recordTable tbody");
   row.innerHTML = `
     <td>${date}</td>
     <td>${height}</td>
     <td>${weight}</td>
-    <td>${bmi}</td>`;
+    <td>${bmi}</td>
+    <td class="delete-btn" onclick="deleteBMI(${id}, this)"></td>`;
   recordTableBody.appendChild(row);
-  const deleteBtn = document.createElement("td");
-  deleteBtn.classList.add("delete-btn");
-  deleteBtn.onclick = deleteBMI;
-  row.appendChild(deleteBtn);
+  // const deleteBtn = document.createElement("td");
+  // deleteBtn.classList.add("delete-btn");
+  // deleteBtn.onclick = deleteBMI;
+  // row.appendChild(deleteBtn);
 }
 //記錄條刪除紐
-function deleteBMI() {
-  const list = this.parentNode;
-  const parent = list.parentNode;
-  parent.removeChild(list);
-}
+window.deleteBMI = function (id, element) {
+  const row = element.closest("tr"); // 獲取包含這個按鈕的父元素 <tr>
+  //過濾不匹配的id
+  if (row) {
+    recordsList = recordsList.filter((record) => record.id !== id);
+
+    localStorage.setItem(STATE_KEY, JSON.stringify(recordsList));
+    row.remove();
+  } else {
+    console.error("未能找到包含刪除按鈕的 <tr> 元素");
+  }
+  // const list = this.parentNode;
+  // const parent = list.parentNode;
+  // parent.removeChild(list);
+};
 
 // export function deleteRecord(
 //   dateToDelete,

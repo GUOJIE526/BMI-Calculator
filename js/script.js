@@ -1,8 +1,11 @@
-import { BMI } from "./dom.js";
+import { BMI, initrecords } from "./dom.js";
 
 const bmiButton = document.getElementById("btn");
 bmiButton.addEventListener("click", BMI);
 
+document.addEventListener("DOMContentLoaded", function () {
+  initrecords();
+});
 // import { addRecord, loadRecords, saveRecord, deleteRecord } from "./dom.js";
 
 // document.addEventListener("DOMContentLoaded", function () {
