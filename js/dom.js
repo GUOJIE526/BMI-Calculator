@@ -88,6 +88,7 @@ window.deleteBMI = function (id, element) {
     recordsList = recordsList.filter((record) => record.id !== id);
 
     localStorage.setItem(STATE_KEY, JSON.stringify(recordsList));
+    // saveRecord(recordsList);
     row.remove();
   } else {
     console.error("未能找到包含刪除按鈕的 <tr> 元素");
