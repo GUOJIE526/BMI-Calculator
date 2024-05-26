@@ -20,21 +20,6 @@ export function initrecords() {
   });
 }
 
-// //讀取localStorage
-// function loadRecord() {
-//   const recordsList = localStorage.getItem(STATE_KEY);
-//   if (recordsList !== null) {
-//     return JSON.parse(recordsList);
-//   }
-//   return [];
-//   console.log(recordsList);
-//   addRecord(recordsList[0], recordsList[1], recordsList[2], recordsList[3]);
-// }
-
-// //儲存localStorage
-// function saveRecord(record) {
-//   localStorage.setItem(STATE_KEY, JSON.stringify(record));
-// }
 function loadRecords() {
   const recordsList = localStorage.getItem(STATE_KEY);
   if (recordsList !== null) {
@@ -94,10 +79,6 @@ function addRecord(date, height, weight, bmi) {
     <td>${bmi}</td>
     <td class="delete-btn" onclick="deleteBMI(${id}, this)"></td>`;
   recordTableBody.appendChild(row);
-  // const deleteBtn = document.createElement("td");
-  // deleteBtn.classList.add("delete-btn");
-  // deleteBtn.onclick = deleteBMI;
-  // row.appendChild(deleteBtn);
 }
 //記錄條刪除紐
 window.deleteBMI = function (id, element) {
@@ -111,24 +92,4 @@ window.deleteBMI = function (id, element) {
   } else {
     console.error("未能找到包含刪除按鈕的 <tr> 元素");
   }
-  // const list = this.parentNode;
-  // const parent = list.parentNode;
-  // parent.removeChild(list);
 };
-
-// export function deleteRecord(
-//   dateToDelete,
-//   heightToDelete,
-//   weightToDelete,
-//   bmiToDelete
-// ) {
-//   const records = JSON.parse(localStorage.getItem("bmirecords")) || [];
-//   const updatedRecords = records.filter(
-//     (record) =>
-//       record.date !== dateToDelete ||
-//       record.height !== heightToDelete ||
-//       record.weight !== weightToDelete ||
-//       record.bmi !== bmiToDelete
-//   );
-//   localStorage.setItem("bmirecords", JSON.stringify(updatedRecords));
-// }
