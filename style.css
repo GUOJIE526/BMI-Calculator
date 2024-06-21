@@ -13,7 +13,7 @@ body{
 
 section{
   min-height: 100vh;
-  padding: 8rem 10% 8rem;
+  padding: 8rem 5% 8rem;
 }
 
 .header{
@@ -22,7 +22,7 @@ section{
   left: 0;
   width: 100%;
   height: 50px;
-  padding: 20px 10px;
+  padding: 20px 25px;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -50,7 +50,7 @@ section{
 .logo{
   font-size: 30px;
   font-weight: 800;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Noto Sans TC", sans-serif;
   color: antiquewhite;
 }
 .input-container{
@@ -111,4 +111,55 @@ th{
   background-repeat: no-repeat;
   width: 20.5px;
   height: 20.5px;
+}
+h1{
+  font-family: "Noto Sans TC", sans-serif;
+  font-weight: 700;
+  color: #063cec;
+  font-size: 3.5rem;
+  border: 5px, solid #063cec;
+  border-radius: 20px;
+  max-width: 250px;
+  text-align: center;
+}
+p{
+  font-family: "Ma Shan Zheng", cursive;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+#calories-container{
+  margin: 0;
+  padding-left: 120px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#week-container{
+  margin: 10px;
+  width: 350px;
+  height: 400px;
+  padding: 5px 0;
+  background-color: white;
+  border-radius: 20px;
+  text-align: center;
+}
+#input-box input{
+  background-color: transparent;
+  border-radius: 10px;
+  font-size: 17px;
+}
+#add-button{
+  background-color: #359AFF;
+  border: 0px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  padding: 10px 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+
 }

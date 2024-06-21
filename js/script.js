@@ -1,4 +1,4 @@
-import { BMI, initrecords } from "./dom.js";
+import { BMI, initrecords } from "./bmi.js";
 
 const bmiButton = document.getElementById("btn");
 bmiButton.addEventListener("click", BMI);
